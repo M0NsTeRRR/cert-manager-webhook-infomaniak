@@ -1,0 +1,24 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    "docker:enableMajor",
+    "replacements:k8s-registry-move",
+    ":automergePr",
+    ":automergePatch",
+    ":automergeDigest",
+    ":disableRateLimiting",
+    ":dependencyDashboard",
+    ":semanticCommits",
+    ":timezone(Europe/Paris)",
+    "github>m0nsterrr/cert-manager-webhook-infomaniak//.github/renovate/labels.json5",
+    "github>m0nsterrr/cert-manager-webhook-infomaniak//.github/renovate/devcontainers.json5",
+  ],
+  "dependencyDashboardTitle": "Renovate Dashboard 🤖",
+  "suppressNotifications": ["prEditedNotification", "prIgnoreNotification"],
+  "rebaseWhen": "conflicted",
+  "minimumReleaseAge": "3 days",
+  "labels": [
+    "dependencies",
+  ]
+}

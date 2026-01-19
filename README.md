@@ -39,6 +39,7 @@ _Cert manager acme dns01 webhook provider for infomaniak_
 - [License](#-license)
 <!-- template:end:table_of_content -->
 
+
 <!-- template:begin:usage/title -->
 ## 🪐 Usage
 <!-- template:end:usage/title -->
@@ -47,7 +48,6 @@ _Cert manager acme dns01 webhook provider for infomaniak_
 #### 🐹 Go CLI
 Install the package `go install github.com/m0nsterrr/cert-manager-webhook-infomaniak@latest`.
 <!-- template:end:usage/go -->
-
 <!-- template:begin:usage/binary -->
 #### 🪛 Binary
 ```bash

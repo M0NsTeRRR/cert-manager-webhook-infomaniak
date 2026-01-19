@@ -11,7 +11,7 @@ _Cert manager acme dns01 webhook provider for infomaniak_
 
 <div align="center">
 
-[![Go](https://img.shields.io/github/v/tag/m0nsterrr/cert-manager-webhook-infomaniak?label=&logo=go&style=for-the-badge&logoColor=white&color=00ACD7)](https://pkg.go.dev/github.com/m0nsterrr/cert-manager-webhook-infomaniak/infomaniak)
+[![Go](https://img.shields.io/github/v/tag/m0nsterrr/cert-manager-webhook-infomaniak?label=&logo=go&style=for-the-badge&logoColor=white&color=00ACD7)](https://pkg.go.dev/github.com/m0nsterrr/cert-manager-webhook-infomaniak/None)
 [![Helm](https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2FM0NsTeRRR%2Fhelm-charts%2Frefs%2Fheads%2Fmain%2Fcharts%2Fcert-manager-webhook-infomaniak%2FChart.yaml&query=%24.version&label=&logo=helm&style=for-the-badge&logoColor=0F1487&color=white)](https://github.com/M0NsTeRRR/helm-charts/tree/main/charts/cert-manager-webhook-infomaniak)
 </div>
 
@@ -25,6 +25,8 @@ _Cert manager acme dns01 webhook provider for infomaniak_
 <!-- template:begin:table_of_content -->
 ## 🔗 Table of Contents
 - [Usage](#-usage)
+    - [Go CLI](#-go-cli)
+    - [Binary](#-binary)
     - [Docker](#-docker)
     - [Helm chart](#-helm-chart)
 - [Configuration](#-configuration)
@@ -41,6 +43,49 @@ _Cert manager acme dns01 webhook provider for infomaniak_
 ## 🪐 Usage
 <!-- template:end:usage/title -->
 
+<!-- template:begin:usage/go -->
+#### 🐹 Go CLI
+Install the package `go install github.com/m0nsterrr/cert-manager-webhook-infomaniak@latest`.
+<!-- template:end:usage/go -->
+
+<!-- template:begin:usage/binary -->
+#### 🪛 Binary
+```bash
+version="1.0.0"
+platform="linux-amd64"
+
+# Download binary
+wget "https://github.com/m0nsterrr/cert-manager-webhook-infomaniak/releases/download/v${version}/cert-manager-webhook-infomaniak-${version}-${platform}.tar.gz"
+
+# Verify checksum (recommended but not required)
+wget "https://github.com/m0nsterrr/cert-manager-webhook-infomaniak/releases/download/v${version}/checksums.txt"
+sha256sum --ignore-missing -c checksums.txt
+
+# Verify binary signature (recommended but not required)
+cosign verify-blob \
+  --certificate-identity "https://github.com/M0NsTeRRR/cert-manager-webhook-infomaniak/.github/workflows/release.yml@refs/tags/v${version}" \
+  --certificate-oidc-issuer "https://token.actions.githubusercontent.com" \
+  --bundle "https://github.com/m0nsterrr/cert-manager-webhook-infomaniak/releases/download/v${version}/cert-manager-webhook-infomaniak-${version}-${platform}.sigstore.json"
+  ./cert-manager-webhook-infomaniak-${version}-${platform}.tar.gz
+
+# Extract binary
+tar -xvzf cert-manager-webhook-infomaniak-${version}-${platform}.tar.gz
+
+# Verify SBOM attestation (recommended but not required)
+wget "https://github.com/m0nsterrr/cert-manager-webhook-infomaniak/releases/download/v${version}/cert-manager-webhook-infomaniak-${version}-${platform}.sbom.bundle"
+cosign verify-blob-attestation \
+  --type=cyclonedx \
+  --new-bundle-format \
+  --certificate-identity "https://github.com/M0NsTeRRR/cert-manager-webhook-infomaniak/.github/workflows/release.yml@refs/tags/v${version}" \
+  --certificate-oidc-issuer "https://token.actions.githubusercontent.com" \
+  --bundle cert-manager-webhook-infomaniak-${version}-${platform}.sbom.bundle
+  ./cert-manager-webhook-infomaniak-${version}-${platform}.tar.gz
+
+# Scan SBOM attestation, SBOM attestation was saved from the previous step  (recommended but not required)
+jq -r '.dsseEnvelope.payload' cert-manager-webhook-infomaniak-${version}-${platform}.sbom.bundle | base64 -d | jq -r '.predicate' > ./cert-manager-webhook-infomaniak-${version}-${platform}-extracted.sbom.bundle
+trivy sbom ./cert-manager-webhook-infomaniak-${version}-${platform}-extracted.sbom.bundle
+```
+<!-- template:end:usage/binary -->
 
 <!-- template:begin:usage/docker -->
 #### 🐳 Docker

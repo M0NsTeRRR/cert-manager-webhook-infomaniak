@@ -28,7 +28,6 @@ var ctx = context.TODO()
 // interface.
 type InfomaniakDNSProviderSolver struct {
 	k8Client  kubernetes.Interface
-	dnsClient infomaniak.Provider
 	namespace string
 }
 

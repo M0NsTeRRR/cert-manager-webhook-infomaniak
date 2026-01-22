@@ -11,10 +11,12 @@ indent_size = 2
 indent_style = space
 insert_final_newline = true
 
+
 # Go
 [{go.mod,*.go}]
 indent_size = 4
 indent_style = tab
+
 
 # JSON
 [*.json]
@@ -29,6 +31,8 @@ indent_size = 2
 [*.md]
 indent_size = 4
 trim_trailing_whitespace = false
+
+
 # Docker
 [Dockerfile]
 indent_size = 4

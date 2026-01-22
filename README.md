@@ -24,9 +24,7 @@ _Cert manager acme dns01 webhook provider for infomaniak_
 <!-- template:begin:table_of_content -->
 ## 🔗 Table of Contents
 - [Usage](#-usage)
-    - [Docker](#-docker)
     - [Helm chart](#-helm-chart)
-- [Configuration](#-configuration)
 - [Dev](#%EF%B8%8F-dev)
     - [Run linter and formatter](#run-linter-and-formatter)
     - [Run test](#run-test)
@@ -40,41 +38,10 @@ _Cert manager acme dns01 webhook provider for infomaniak_
 ## 🪐 Usage
 <!-- template:end:usage/title -->
 
-<!-- template:begin:usage/docker -->
-#### 🐳 Docker
-> [!NOTE]
-> This section is recommended but not required.
-
-```bash
-version="1.0.0"
-
-# Pull image
-docker pull ghcr.io/m0nsterrr/cert-manager-webhook-infomaniak:v${version}
-
-# Verify image signature
-cosign verify ghcr.io/m0nsterrr/cert-manager-webhook-infomaniak:v${version} \
-  --certificate-identity "https://github.com/M0NsTeRRR/cert-manager-webhook-infomaniak/.github/workflows/release.yml@refs/tags/v${version}" \
-  --certificate-oidc-issuer "https://token.actions.githubusercontent.com"
-
-# Verify image attestation
-cosign verify-attestation ghcr.io/m0nsterrr/cert-manager-webhook-infomaniak:v${version} \
-  --type=cyclonedx \
-  --certificate-identity "https://github.com/M0NsTeRRR/cert-manager-webhook-infomaniak/.github/workflows/release.yml@refs/tags/v${version}" \
-  --certificate-oidc-issuer "https://token.actions.githubusercontent.com" | jq -r '.payload | @base64d' > ./extracted-sbom.cdx.json
-
-# Scan SBOM attestation, SBOM attestation was saved from the previous step
-trivy sbom ./extracted-sbom.cdx.json
-```
-<!-- template:end:usage/docker -->
-
 <!-- template:begin:usage/helm -->
 #### ☸ Helm chart
 See [helm-charts](https://github.com/M0NsTeRRR/helm-charts).
 <!-- template:end:usage/helm -->
-
-<!-- template:begin:configuration -->
-## 📜 Configuration
-<!-- template:end:configuration -->
 
 <!-- template:begin:dev -->
 ## 🛠️ Dev

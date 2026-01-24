@@ -19,15 +19,6 @@ _Cert manager acme dns01 webhook provider for infomaniak_
 [![OpenSSF Scorecard](https://img.shields.io/ossf-scorecard/github.com/M0NsTeRRR/cert-manager-webhook-infomaniak?label=openssf%20scorecard&style=for-the-badge)](https://scorecard.dev/viewer/?uri=github.com/M0NsTeRRR/cert-manager-webhook-infomaniak)
 
 </div>
-
-> [!IMPORTANT]
-> This provider is a community-driven alternative to the [official Infomaniak cert-manager webhook](https://github.com/Infomaniak/cert-manager-webhook-infomaniak/).
->
-> **Key improvements:**
-> - **Distroless image:** Only the binary, running rootless for enhanced security.
-> - **Updated dependencies:** Regularly maintained for reliability and security.
-> - **Open collaboration:** Issues enabled for community feedback and contributions.
-> - **OCI-compatible artifacts:** Helm chart and container images are published in OCI format and signed, making them easy to integrate with GitOps tools like Flux and ArgoCD.
 <!-- template:end:header -->
 
 <!-- template:begin:table_of_content -->
@@ -49,7 +40,7 @@ _Cert manager acme dns01 webhook provider for infomaniak_
 
 <!-- template:begin:usage/helm -->
 #### ☸ Helm chart
-See [helm-charts](https://github.com/M0NsTeRRR/helm-charts).
+See [helm-charts](https://github.com/M0NsTeRRR/helm-charts/tree/main/charts/cert-manager-webhook-infomaniak).
 <!-- template:end:usage/helm -->
 
 <!-- template:begin:dev -->

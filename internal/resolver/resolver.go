@@ -27,8 +27,8 @@ var ctx = context.TODO()
 // To do so, it must implement the `github.com/cert-manager/cert-manager/pkg/acme/webhook.Solver`
 // interface.
 type InfomaniakDNSProviderSolver struct {
+	Namespace string
 	k8Client  kubernetes.Interface
-	namespace string
 }
 
 type infomaniakDNSProviderConfig struct {
@@ -131,9 +131,9 @@ func (p *InfomaniakDNSProviderSolver) newDNSAPIFromK8Secret(ch *v1alpha1.Challen
 		config.ApiTokenSecretKey = defaultApiTokenSecretKey
 	}
 
-	secret, err := p.k8Client.CoreV1().Secrets(p.namespace).Get(context.Background(), config.SecretRef, v1.GetOptions{})
+	secret, err := p.k8Client.CoreV1().Secrets(p.Namespace).Get(context.Background(), config.SecretRef, v1.GetOptions{})
 	if err != nil {
-		return nil, fmt.Errorf("failed to get secret %s from namespace %s: %w", config.SecretRef, p.namespace, err)
+		return nil, fmt.Errorf("failed to get secret %s from namespace %s: %w", config.SecretRef, p.Namespace, err)
 	}
 
 	return &infomaniak.Client{Token: string(secret.Data[config.ApiTokenSecretKey])}, nil

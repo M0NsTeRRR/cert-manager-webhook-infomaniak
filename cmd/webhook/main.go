@@ -22,5 +22,5 @@ func main() {
 		panic("NAMESPACE must be specified")
 	}
 
-	cmd.RunWebhookServer(groupName, &resolver.InfomaniakDNSProviderSolver{})
+	cmd.RunWebhookServer(groupName, &resolver.InfomaniakDNSProviderSolver{Namespace: namespace})
 }

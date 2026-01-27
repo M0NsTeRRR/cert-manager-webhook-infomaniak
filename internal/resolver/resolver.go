@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"strings"
 
 	"github.com/cert-manager/cert-manager/pkg/acme/webhook/apis/acme/v1alpha1"
 	"github.com/libdns/infomaniak"
@@ -50,7 +51,7 @@ func (c *InfomaniakDNSProviderSolver) Present(ch *v1alpha1.ChallengeRequest) err
 		return fmt.Errorf("failed to create Infomaniak API client: %w", err)
 	}
 
-	_, err = dnsAPI.SetRecords(ctx, ch.ResolvedZone, []libdns.Record{libdns.TXT{Name: ch.DNSName, Text: ch.Key}})
+	_, err = dnsAPI.SetRecords(ctx, ch.ResolvedZone, []libdns.Record{libdns.TXT{Name: recordNameFromChallenge(ch), Text: ch.Key}})
 	return err
 }
 
@@ -66,7 +67,7 @@ func (c *InfomaniakDNSProviderSolver) CleanUp(ch *v1alpha1.ChallengeRequest) err
 		return fmt.Errorf("failed to create Infomaniak API client: %w", err)
 	}
 
-	_, err = dnsAPI.DeleteRecords(ctx, ch.ResolvedZone, []libdns.Record{libdns.TXT{Name: ch.DNSName, Text: ch.Key}})
+	_, err = dnsAPI.DeleteRecords(ctx, ch.ResolvedZone, []libdns.Record{libdns.TXT{Name: recordNameFromChallenge(ch), Text: ch.Key}})
 	return err
 }
 
@@ -125,4 +126,8 @@ func (p *InfomaniakDNSProviderSolver) newDNSAPIFromK8Secret(ch *v1alpha1.Challen
 	}
 
 	return &infomaniak.Provider{APIToken: string(secret.Data[config.ApiTokenSecretKey])}, nil
+}
+
+func recordNameFromChallenge(ch *v1alpha1.ChallengeRequest) string {
+	return strings.TrimSuffix(ch.ResolvedFQDN, "."+ch.ResolvedZone)
 }

@@ -4,11 +4,10 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"strconv"
-	"strings"
 
 	"github.com/cert-manager/cert-manager/pkg/acme/webhook/apis/acme/v1alpha1"
 	"github.com/libdns/infomaniak"
+	"github.com/libdns/libdns"
 	extapi "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
@@ -51,14 +50,7 @@ func (c *InfomaniakDNSProviderSolver) Present(ch *v1alpha1.ChallengeRequest) err
 		return fmt.Errorf("failed to create Infomaniak API client: %w", err)
 	}
 
-	zone := zoneNameFromChallenge(ch)
-
-	record, err := getRecordFromId(*dnsAPI, ch)
-	if err != nil {
-		return err
-	}
-
-	_, err = dnsAPI.CreateOrUpdateRecord(ctx, zone, *record)
+	_, err = dnsAPI.SetRecords(ctx, ch.ResolvedZone, []libdns.Record{libdns.TXT{Name: ch.DNSName, Text: ch.Key}})
 	return err
 }
 
@@ -74,12 +66,8 @@ func (c *InfomaniakDNSProviderSolver) CleanUp(ch *v1alpha1.ChallengeRequest) err
 		return fmt.Errorf("failed to create Infomaniak API client: %w", err)
 	}
 
-	record, err := getRecordFromId(*dnsAPI, ch)
-	if err != nil {
-		return err
-	}
-
-	return dnsAPI.DeleteRecord(ctx, zoneNameFromChallenge(ch), strconv.Itoa(record.ID))
+	_, err = dnsAPI.DeleteRecords(ctx, ch.ResolvedZone, []libdns.Record{libdns.TXT{Name: ch.DNSName, Text: ch.Key}})
+	return err
 }
 
 // Initialize will be called when the webhook first starts.
@@ -117,7 +105,7 @@ func loadConfig(cfgJSON *extapi.JSON) (infomaniakDNSProviderConfig, error) {
 	return cfg, nil
 }
 
-func (p *InfomaniakDNSProviderSolver) newDNSAPIFromK8Secret(ch *v1alpha1.ChallengeRequest) (*infomaniak.Client, error) {
+func (p *InfomaniakDNSProviderSolver) newDNSAPIFromK8Secret(ch *v1alpha1.ChallengeRequest) (*infomaniak.Provider, error) {
 	config, err := loadConfig(ch.Config)
 	if err != nil {
 		return nil, fmt.Errorf("failed to load config: %w", err)
@@ -136,31 +124,5 @@ func (p *InfomaniakDNSProviderSolver) newDNSAPIFromK8Secret(ch *v1alpha1.Challen
 		return nil, fmt.Errorf("failed to get secret %s from namespace %s: %w", config.SecretRef, p.Namespace, err)
 	}
 
-	return &infomaniak.Client{Token: string(secret.Data[config.ApiTokenSecretKey])}, nil
-}
-
-func getRecordFromId(c infomaniak.Client, ch *v1alpha1.ChallengeRequest) (*infomaniak.IkRecord, error) {
-	var record *infomaniak.IkRecord
-
-	recordList, err := c.GetDnsRecordsForZone(ctx, zoneNameFromChallenge(ch))
-	if err != nil {
-		return nil, fmt.Errorf("failed to get records: %w", err)
-	}
-
-	for _, r := range recordList {
-		if r.Source == recordNameFromChallenge(ch) && r.Target == ch.Key {
-			record = &r
-			break
-		}
-	}
-
-	return record, nil
-}
-
-func recordNameFromChallenge(ch *v1alpha1.ChallengeRequest) string {
-	return strings.TrimSuffix(ch.ResolvedFQDN, "."+ch.ResolvedZone)
-}
-
-func zoneNameFromChallenge(ch *v1alpha1.ChallengeRequest) string {
-	return strings.TrimSuffix(ch.ResolvedZone, ".")
+	return &infomaniak.Provider{APIToken: string(secret.Data[config.ApiTokenSecretKey])}, nil
 }

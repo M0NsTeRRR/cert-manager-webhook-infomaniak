@@ -62,7 +62,6 @@ Install [Go](https://go.dev/doc/install).
 
 ```
 golangci-lint run
-go fmt .
 ```
 <!-- template:end:dev -->
 

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"os"
 
 	"github.com/cert-manager/cert-manager/pkg/acme/webhook/cmd"
@@ -9,11 +10,16 @@ import (
 )
 
 var (
+	version   = "development"
+	buildTime = "0"
+
 	groupName = os.Getenv("GROUP_NAME")
 	namespace = os.Getenv("NAMESPACE")
 )
 
 func main() {
+	log.Printf("Starting cert-manager-webhook-infomaniak version %s built on %s", version, buildTime)
+
 	if groupName == "" {
 		panic("GROUP_NAME must be specified")
 	}

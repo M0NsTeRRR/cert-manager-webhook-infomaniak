@@ -2,10 +2,12 @@ module github.com/m0nsterrr/cert-manager-webhook-infomaniak
 
 go 1.25.5
 
-require github.com/cert-manager/cert-manager v1.19.2
+require (
+	github.com/cert-manager/cert-manager v1.19.3
+	github.com/libdns/libdns v1.0.0-beta.1
+)
 
 require (
-	github.com/libdns/libdns v1.0.0-beta.1 // indirect
 	github.com/miekg/dns v1.1.68 // indirect
 	golang.org/x/mod v0.29.0 // indirect
 	golang.org/x/tools v0.38.0 // indirect
@@ -97,10 +99,10 @@ require (
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	k8s.io/api v0.34.1 // indirect
-	k8s.io/apiextensions-apiserver v0.34.1 // indirect
-	k8s.io/apimachinery v0.34.1 // indirect
+	k8s.io/apiextensions-apiserver v0.34.1
+	k8s.io/apimachinery v0.34.1
 	k8s.io/apiserver v0.34.1 // indirect
-	k8s.io/client-go v0.34.1 // indirect
+	k8s.io/client-go v0.34.1
 	k8s.io/component-base v0.34.1 // indirect
 	k8s.io/klog/v2 v2.130.1 // indirect
 	k8s.io/kms v0.34.1 // indirect

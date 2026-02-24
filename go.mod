@@ -4,7 +4,7 @@ go 1.25.5
 
 require (
 	github.com/cert-manager/cert-manager v1.19.4
-	github.com/libdns/libdns v1.0.0-beta.1
+	github.com/libdns/libdns v1.1.1
 )
 
 require (

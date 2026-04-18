@@ -1,7 +1,7 @@
 package main
 
 import (
-	"log"
+	"log/slog"
 	"os"
 
 	"github.com/cert-manager/cert-manager/pkg/acme/webhook/cmd"
@@ -18,7 +18,7 @@ var (
 )
 
 func main() {
-	log.Printf("Starting cert-manager-webhook-infomaniak version %s built on %s", version, buildTime)
+	slog.Info("Starting cert-manager-webhook-infomaniak", "version", version, "build_time", buildTime)
 
 	if groupName == "" {
 		panic("GROUP_NAME must be specified")

@@ -63,6 +63,9 @@ Install [Go](https://go.dev/doc/install).
 ```
 golangci-lint run
 ```
+### devenv
+
+A devenv is available; the documentation can be found on how to use it [here](https://devenv.sh/getting-started/).
 <!-- template:end:dev -->
 
 <!-- template:begin:support -->

@@ -47,6 +47,8 @@ _Cert manager acme dns01 webhook provider for infomaniak_
 ## 🪐 Usage
 <!-- template:end:usage/title -->
 
+The Infomaniak API token needs the `domain:read`, `dns:read`, and `dns:write` scopes.
+
 <!-- template:begin:usage/helm -->
 #### ☸ Helm chart
 See [helm-charts](https://github.com/M0NsTeRRR/helm-charts/tree/main/charts/cert-manager-webhook-infomaniak).

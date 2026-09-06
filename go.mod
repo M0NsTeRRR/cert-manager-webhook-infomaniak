@@ -3,7 +3,7 @@ module github.com/m0nsterrr/cert-manager-webhook-infomaniak
 go 1.26.0
 
 require (
-	github.com/cert-manager/cert-manager v1.21.0
+	github.com/cert-manager/cert-manager v1.21.1
 	github.com/libdns/libdns v1.1.1
 )
 

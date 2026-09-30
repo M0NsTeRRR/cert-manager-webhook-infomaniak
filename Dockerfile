@@ -11,7 +11,7 @@ RUN go mod download
 
 RUN CGO_ENABLED=0 go build -trimpath -a -o cert-manager-webhook-infomaniak -ldflags "-w -X main.version=$VERSION -X main.buildTime=$SOURCE_DATE_EPOCH -extldflags '-static'" cmd/webhook/main.go
 
-FROM gcr.io/distroless/static:nonroot@sha256:963fa6c544fe5ce420f1f54fb88b6fb01479f054c8056d0f74cc2c6000df5240
+FROM gcr.io/distroless/static:nonroot@sha256:e2e927ec666bae08560abb3c55d0659eceabb657f56b6782ab500a9fc7f555e3
 
 COPY --from=builder /go/src/app/cert-manager-webhook-infomaniak /bin/cert-manager-webhook-infomaniak
 

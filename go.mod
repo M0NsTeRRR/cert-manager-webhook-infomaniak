@@ -8,7 +8,7 @@ require (
 	github.com/libdns/libdns v1.1.1
 	k8s.io/apiextensions-apiserver v0.37.2
 	k8s.io/apimachinery v0.37.2
-	k8s.io/client-go v0.37.2
+	k8s.io/client-go v11.0.0+incompatible
 )
 
 require (
